@@ -8,7 +8,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui";
-import { Article } from "@/store/slices/newsSlice";
+import { Article } from "./types";
 
 export function ArticleItem({ article }: { article: Article }) {
   const gotoArticle = () => {

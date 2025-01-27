@@ -12,6 +12,7 @@ export {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./dropdown-menu";
-export { HoverCard } from "./hover-card";
+} from "./dropdownMenu";
+export { HoverCard } from "./hoverCard";
 export { Input } from "./input";
+export { Loader } from "./Loader";
