@@ -1,8 +1,8 @@
-import { Card } from "@/components/ui/card";
-import { ModeToggle } from "@/components/mode-toggle";
-import { NavToggle } from "../nav-toggle";
+import { Card } from "@/components/ui";
+import { ModeToggle } from "@/components/theme";
+import { NavToggle } from "@/components/theme";
 
-const Navbar: React.FC = () => {
+const Header: React.FC = () => {
   return (
     <Card className="bg-card py-4 px-6 border-0 flex items-center justify-between rounded-none shadow-sm sticky top-0 z-50">
       <div className="flex items-center gap-4">
@@ -19,4 +19,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default Header;

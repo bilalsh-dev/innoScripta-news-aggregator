@@ -1,13 +1,13 @@
 import moment from "moment";
-import { Button } from "@/components/ui/button";
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
   CardFooter,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
+} from "@/components/ui";
 import { Article } from "@/store/slices/newsSlice";
 
 export function ArticleItem({ article }: { article: Article }) {

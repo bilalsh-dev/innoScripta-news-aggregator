@@ -43,13 +43,16 @@ export const fetchNews = createAsyncThunk(
   async ({
     country,
     category,
-    query,
+    query = "",
+    page,
   }: {
     country?: string;
     category?: string;
     query?: string;
+    page?: number;
   }) => {
-    const url = API_URLS.NEWS_API(country, category, query);
+    console.table({ country, category, query, page });
+    const url = API_URLS.NEWS_API(country, category, query, page);
     const data = await fetchData(url);
     return data.articles;
   }

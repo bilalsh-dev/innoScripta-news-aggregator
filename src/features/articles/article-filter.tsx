@@ -1,19 +1,17 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Input,
+} from "@/components/ui";
 import { Search, Calendar, Filter, Newspaper, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useTheme } from "@/components/theme-provider";
+import { useTheme } from "@/components/theme";
 import { useState } from "react";
 
-// Define types for dropdown options
 type DropdownOption = string;
 
-// Define props for the DropdownFilter component
 interface DropdownFilterProps {
   icon: React.ElementType;
   options: DropdownOption[];
@@ -22,7 +20,6 @@ interface DropdownFilterProps {
   placeholder: string;
 }
 
-// Constants for dropdown options
 const DATE_OPTIONS: DropdownOption[] = ["Today", "Last 7 Days", "Last 30 Days"];
 const CATEGORY_OPTIONS: DropdownOption[] = [
   "Politics",
@@ -35,7 +32,6 @@ const SOURCE_OPTIONS: DropdownOption[] = [
   "The Guardian",
 ];
 
-// Reusable Dropdown Component
 const DropdownFilter: React.FC<DropdownFilterProps> = ({
   icon: Icon,
   options,
@@ -91,13 +87,11 @@ const ArticleFilter: React.FC<object> = () => {
     setSelectedSource("");
   };
 
-  // Check if any filter or search is selected
   const isFilterActive =
     searchQuery || selectedDate || selectedCategory || selectedSource;
 
   return (
     <>
-      {/* Desktop Filters */}
       <div className="hidden md:flex items-center gap-4 flex-1 max-w-4xl mx-auto py-7">
         {/* Search Bar */}
         <div className="relative flex-1">
@@ -158,7 +152,6 @@ const ArticleFilter: React.FC<object> = () => {
         )}
       </div>
 
-      {/* Mobile Sidebar */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"

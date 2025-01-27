@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
-
-import { useTheme } from "@/components/theme-provider";
+import { Button } from "@/components/ui";
+import { useTheme } from "@/components/theme";
 import { Menu } from "lucide-react";
-export function NavToggle() {
+export default function NavToggle() {
   const { toggleSidebar } = useTheme();
 
   return (
