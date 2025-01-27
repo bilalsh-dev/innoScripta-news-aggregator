@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FiltersState {
-  source: string; // 'all', 'newsAPI', 'nyt', 'guardian'
-  dateRange: string; // 'all', 'today', 'week', 'month'
-  category: string; // 'all', 'politics', 'technology', 'business'
+  sources: string[];
+  dateRange: string;
+  category: string;
   query: string;
 }
 
 const initialState: FiltersState = {
-  source: "",
+  sources: [],
   dateRange: "",
   category: "",
   query: "",
@@ -18,8 +18,8 @@ const filtersSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    setSource: (state, action: PayloadAction<string>) => {
-      state.source = action.payload;
+    setSources: (state, action: PayloadAction<string[]>) => {
+      state.sources = action.payload;
     },
     setDateRange: (state, action: PayloadAction<string>) => {
       state.dateRange = action.payload;
@@ -31,7 +31,7 @@ const filtersSlice = createSlice({
       state.query = action.payload;
     },
     resetFilters: (state) => {
-      state.source = "";
+      state.sources = [];
       state.dateRange = "";
       state.category = "";
       state.query = "";
@@ -39,6 +39,6 @@ const filtersSlice = createSlice({
   },
 });
 
-export const { setSource, setDateRange, setCategory, setQuery, resetFilters } =
+export const { setSources, setDateRange, setCategory, setQuery, resetFilters } =
   filtersSlice.actions;
 export default filtersSlice.reducer;

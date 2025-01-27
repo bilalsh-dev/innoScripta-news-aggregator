@@ -7,6 +7,7 @@ export {
   CardTitle,
   CardDescription,
 } from "./card";
+export { Checkbox } from "./checkbox";
 export {
   DropdownMenu,
   DropdownMenuContent,
