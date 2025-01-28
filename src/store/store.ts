@@ -1,15 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import newsAPIReducer from "@/features/articles/newsAPI/newsAPISlice";
-import filtersReducer from "@/features/filters/filtersSlice";
-import { normalizeMiddleware } from "./middleware/normalizeMiddleware";
+import newsAPIReducer from "@/features/articles/newsAPI/slice";
+import nytReducer from "@/features/articles/nyt/slice";
+import guardianReducer from "@/features/articles/guardian/slice";
+import filtersReducer from "@/features/filters/slice";
 
 export const store = configureStore({
   reducer: {
     newsAPI: newsAPIReducer,
+    nyt: nytReducer,
+    guardian: guardianReducer,
     filters: filtersReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(normalizeMiddleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

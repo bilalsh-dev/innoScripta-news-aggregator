@@ -1,4 +1,5 @@
 export interface GuardianArticle {
+  pillarName: string | undefined;
   id: string;
   type: string;
   sectionId: string;
@@ -8,6 +9,9 @@ export interface GuardianArticle {
   webUrl: string;
   fields?: {
     thumbnail?: string;
+    byline?: string;
+    body?: string;
+    trailText?: string;
   };
 }
 

@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import moment from "moment";
-import { DateRangeValue } from "@/features/filters/filterTypes";
+import { DateRangeValue } from "@/features/filters/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

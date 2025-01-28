@@ -10,7 +10,7 @@ import {
   setCategory,
   setQuery,
   resetFilters,
-} from "@/features/filters/filtersSlice";
+} from "@/features/filters/slice";
 import DropdownFilter from "./DropdownFilter";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import { DATE_RANGES, CATEGORIES, SOURCES } from "@/lib/constants";

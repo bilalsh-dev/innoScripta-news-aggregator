@@ -1,5 +1,5 @@
-import { NewsAPIArticle } from "@/features/articles/newsAPI/newsAPITypes";
-import { Article } from "@/store/slices/newsSlice";
+import { NewsAPIArticle } from "./types";
+import { Article } from "@/features/articles/types";
 
 export const normalizeNewsAPIArticle = (article: NewsAPIArticle): Article => ({
   author: article.author || null,

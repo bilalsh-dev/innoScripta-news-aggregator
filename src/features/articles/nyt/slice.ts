@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchNews } from "@/network/newsAPI";
-import { normalizeNewsAPIArticle } from "@/lib/normalizeData";
+import { fetchNYT } from "./service";
+import { normalizeNYTArticle } from "./utils";
 import { Article } from "../types";
 
-interface NewsAPIState {
+interface NYTState {
   articles: Article[];
   isLoading: boolean;
   error: string | null;
@@ -11,7 +11,7 @@ interface NewsAPIState {
   totalPages: number;
 }
 
-const initialState: NewsAPIState = {
+const initialState: NYTState = {
   articles: [],
   isLoading: false,
   error: null,
@@ -19,26 +19,24 @@ const initialState: NewsAPIState = {
   totalPages: 1,
 };
 
-export const fetchNewsArticles = createAsyncThunk(
-  "newsAPI/fetchArticles",
+export const fetchNYTArticles = createAsyncThunk(
+  "nyt/fetchArticles",
   async ({
-    country,
     category,
     query,
     page,
   }: {
-    country?: string;
     category?: string;
     query?: string;
     page?: number;
   }) => {
-    const data = await fetchNews(country, category, query, page);
+    const data = await fetchNYT(category, query, page);
     return data;
   }
 );
 
-const newsAPISlice = createSlice({
-  name: "newsAPI",
+const nytSlice = createSlice({
+  name: "nyt",
   initialState,
   reducers: {
     resetArticles: (state) => {
@@ -49,26 +47,33 @@ const newsAPISlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchNewsArticles.pending, (state) => {
+      .addCase(fetchNYTArticles.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchNewsArticles.fulfilled, (state, action) => {
+      .addCase(fetchNYTArticles.fulfilled, (state, action) => {
         state.isLoading = false;
+
+        // Normalize the articles
         state.articles = [
           ...state.articles,
-          ...action.payload.articles.map(normalizeNewsAPIArticle),
+          ...action.payload.response.docs.map(normalizeNYTArticle),
         ];
-        state.currentPage = action.payload.page || action.meta.arg.page || 1;
-        console.log("action.payload.page", action.payload.page);
-        state.totalPages = Math.ceil(action.payload.totalResults / 20);
+
+        // Update pagination
+        state.currentPage =
+          action.payload.response.meta.offset / 10 + 1 ||
+          action.meta.arg.page ||
+          1;
+
+        state.totalPages = Math.ceil(action.payload.response.meta.hits / 10);
       })
-      .addCase(fetchNewsArticles.rejected, (state, action) => {
+      .addCase(fetchNYTArticles.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Failed to fetch articles";
       });
   },
 });
 
-export const { resetArticles } = newsAPISlice.actions;
-export default newsAPISlice.reducer;
+export const { resetArticles } = nytSlice.actions;
+export default nytSlice.reducer;
