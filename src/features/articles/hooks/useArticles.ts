@@ -13,6 +13,7 @@ import {
   fetchGuardianArticles,
   resetArticles as resetGuardianArticles,
 } from "../guardian/slice";
+import { SOURCES_VALUES } from "@/lib/constants";
 
 export const useArticles = () => {
   const dispatch = useAppDispatch();
@@ -38,7 +39,7 @@ export const useArticles = () => {
     newsAPIState.error || nytState.error || guardianState.error || null;
 
   const loadMoreArticles = () => {
-    if (sources.includes("NewsAPI") || sources.length === 0) {
+    if (sources.includes(SOURCES_VALUES.newsapi_org) || sources.length === 0) {
       if (newsAPIState.currentPage < newsAPIState.totalPages) {
         dispatch(
           fetchNewsArticles({
@@ -51,7 +52,10 @@ export const useArticles = () => {
       }
     }
 
-    if (sources.includes("NYT") || sources.length === 0) {
+    if (
+      sources.includes(SOURCES_VALUES.newyork_times) ||
+      sources.length === 0
+    ) {
       if (nytState.currentPage < nytState.totalPages) {
         dispatch(
           fetchNYTArticles({
@@ -63,7 +67,7 @@ export const useArticles = () => {
       }
     }
 
-    if (sources.includes("Guardian") || sources.length === 0) {
+    if (sources.includes(SOURCES_VALUES.the_guardian) || sources.length === 0) {
       if (guardianState.currentPage < guardianState.totalPages) {
         dispatch(
           fetchGuardianArticles({
@@ -86,7 +90,7 @@ export const useArticles = () => {
     dispatch(resetNYTArticles());
     dispatch(resetGuardianArticles());
 
-    if (sources.includes("NewsAPI") || sources.length === 0) {
+    if (sources.includes(SOURCES_VALUES.newsapi_org) || sources.length === 0) {
       dispatch(
         fetchNewsArticles({
           country: "us",
@@ -97,7 +101,10 @@ export const useArticles = () => {
       );
     }
 
-    if (sources.includes("NYT") || sources.length === 0) {
+    if (
+      sources.includes(SOURCES_VALUES.newyork_times) ||
+      sources.length === 0
+    ) {
       dispatch(
         fetchNYTArticles({
           category: category.toLowerCase(),
@@ -107,7 +114,7 @@ export const useArticles = () => {
       );
     }
 
-    if (sources.includes("Guardian") || sources.length === 0) {
+    if (sources.includes(SOURCES_VALUES.the_guardian) || sources.length === 0) {
       dispatch(
         fetchGuardianArticles({
           query,

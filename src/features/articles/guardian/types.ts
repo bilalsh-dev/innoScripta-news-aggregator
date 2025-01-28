@@ -13,6 +13,18 @@ export interface GuardianArticle {
     body?: string;
     trailText?: string;
   };
+  blocks: {
+    main: {
+      elements: {
+        type: string;
+        assets: {
+          type: string;
+          mimeType: string;
+          file: string;
+        }[];
+      }[];
+    };
+  };
 }
 
 export interface GuardianResponse {

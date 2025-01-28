@@ -11,5 +11,8 @@ export const normalizeGuardianArticle = (
   source: { id: "guardian", name: "The Guardian" },
   title: article.webTitle || "",
   url: article.webUrl || "",
-  urlToImage: article.fields?.thumbnail || "",
+  urlToImage:
+    article.fields?.thumbnail ||
+    article?.blocks?.main?.elements[0]?.assets[0]?.file ||
+    "",
 });

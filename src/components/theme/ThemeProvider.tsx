@@ -38,17 +38,14 @@ export function ThemeProvider({
 
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
-  // Toggle sidebar open/close
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  // Close sidebar
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
 
-  // Update theme class on the root element
   useEffect(() => {
     const root = window.document.documentElement;
 

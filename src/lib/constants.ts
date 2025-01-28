@@ -21,3 +21,8 @@ export const SOURCES = [
   { label: "BBC", value: "bbc" },
   { label: "CNN", value: "cnn" },
 ];
+export const SOURCES_VALUES = {
+  newsapi_org: "newsAPI",
+  the_guardian: "nyt",
+  newyork_times: "guardian",
+};

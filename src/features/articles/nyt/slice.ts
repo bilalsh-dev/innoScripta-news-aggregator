@@ -54,13 +54,11 @@ const nytSlice = createSlice({
       .addCase(fetchNYTArticles.fulfilled, (state, action) => {
         state.isLoading = false;
 
-        // Normalize the articles
         state.articles = [
           ...state.articles,
           ...action.payload.response.docs.map(normalizeNYTArticle),
         ];
 
-        // Update pagination
         state.currentPage =
           action.payload.response.meta.offset / 10 + 1 ||
           action.meta.arg.page ||

@@ -10,7 +10,6 @@ type DropdownOption = string;
 
 interface DropdownFilterProps {
   icon: React.ElementType;
-  //   options: DropdownOption[];
   options: { label: string; value: string }[];
   selected: DropdownOption;
   setSelected: (option: DropdownOption) => void;
