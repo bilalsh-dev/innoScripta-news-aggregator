@@ -14,6 +14,7 @@ import {
   resetArticles as resetGuardianArticles,
 } from "../guardian/slice";
 import { SOURCES_VALUES } from "@/lib/constants";
+import { Article } from "../types";
 
 export const useArticles = () => {
   const dispatch = useAppDispatch();
@@ -26,11 +27,7 @@ export const useArticles = () => {
 
   const { sources, query, category } = filters;
 
-  const articles = [
-    ...newsAPIState.articles,
-    ...nytState.articles,
-    ...guardianState.articles,
-  ];
+  const [mergedArticles, setMergedArticles] = useState<Article[]>([]);
 
   const isLoading =
     newsAPIState.isLoading || nytState.isLoading || guardianState.isLoading;
@@ -38,45 +35,47 @@ export const useArticles = () => {
   const error =
     newsAPIState.error || nytState.error || guardianState.error || null;
 
-  const loadMoreArticles = () => {
-    if (sources.includes(SOURCES_VALUES.newsapi_org) || sources.length === 0) {
-      if (newsAPIState.currentPage < newsAPIState.totalPages) {
+  const fetchArticles = (source: string, page: number) => {
+    switch (source) {
+      case SOURCES_VALUES.newsapi_org:
         dispatch(
           fetchNewsArticles({
-            country: "us",
-            category: category.toLowerCase(),
+            category: category?.toLowerCase() || "",
             query,
-            page: newsAPIState.currentPage + 1,
+            page,
           })
         );
-      }
-    }
-
-    if (
-      sources.includes(SOURCES_VALUES.newyork_times) ||
-      sources.length === 0
-    ) {
-      if (nytState.currentPage < nytState.totalPages) {
+        break;
+      case SOURCES_VALUES.newyork_times:
         dispatch(
           fetchNYTArticles({
-            category: category.toLowerCase(),
+            category: category?.toLowerCase() || "",
             query,
-            page: nytState.currentPage + 1,
+            page,
           })
         );
-      }
+        break;
+      case SOURCES_VALUES.the_guardian:
+        dispatch(fetchGuardianArticles({ query, page }));
+        break;
+      default:
+        break;
     }
+  };
 
-    if (sources.includes(SOURCES_VALUES.the_guardian) || sources.length === 0) {
-      if (guardianState.currentPage < guardianState.totalPages) {
-        dispatch(
-          fetchGuardianArticles({
-            query,
-            page: guardianState.currentPage + 1,
-          })
-        );
+  const loadMoreArticles = () => {
+    sources.forEach((source) => {
+      const state =
+        source === SOURCES_VALUES.newsapi_org
+          ? newsAPIState
+          : source === SOURCES_VALUES.newyork_times
+          ? nytState
+          : guardianState;
+
+      if (state.currentPage < state.totalPages) {
+        fetchArticles(source, state.currentPage + 1);
       }
-    }
+    });
 
     setHasMore(
       newsAPIState.currentPage < newsAPIState.totalPages ||
@@ -90,39 +89,29 @@ export const useArticles = () => {
     dispatch(resetNYTArticles());
     dispatch(resetGuardianArticles());
 
-    if (sources.includes(SOURCES_VALUES.newsapi_org) || sources.length === 0) {
-      dispatch(
-        fetchNewsArticles({
-          country: "us",
-          category: category.toLowerCase(),
-          query,
-          page: 1,
-        })
-      );
-    }
+    const selectedSources =
+      sources.length > 0 ? sources : Object.values(SOURCES_VALUES);
 
-    if (
-      sources.includes(SOURCES_VALUES.newyork_times) ||
-      sources.length === 0
-    ) {
-      dispatch(
-        fetchNYTArticles({
-          category: category.toLowerCase(),
-          query,
-          page: 1,
-        })
-      );
-    }
-
-    if (sources.includes(SOURCES_VALUES.the_guardian) || sources.length === 0) {
-      dispatch(
-        fetchGuardianArticles({
-          query,
-          page: 1,
-        })
-      );
-    }
+    selectedSources.forEach((source) => {
+      fetchArticles(source, 1);
+    });
   }, [dispatch, query, category, sources]);
 
-  return { articles, loadMoreArticles, hasMore, isLoading, error };
+  useEffect(() => {
+    // Merge articles ensuring Guardian articles are always first
+    const merged = [
+      ...guardianState.articles, // Guardian articles first
+      ...newsAPIState.articles,
+      ...nytState.articles,
+    ];
+    setMergedArticles(merged);
+  }, [guardianState.articles, newsAPIState.articles, nytState.articles]);
+
+  return {
+    articles: mergedArticles,
+    loadMoreArticles,
+    hasMore,
+    isLoading,
+    error,
+  };
 };
