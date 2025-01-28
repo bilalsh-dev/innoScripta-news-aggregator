@@ -1,17 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchNews } from "./service";
 import { normalizeNewsAPIArticle } from "./utils";
-import { Article } from "../types";
+import { ArticleStateSlice, FetchArticlesParams } from "../types";
+import { NewsAPIResponse } from "./types";
 
-interface NewsAPIState {
-  articles: Article[];
-  isLoading: boolean;
-  error: string | null;
-  currentPage: number;
-  totalPages: number;
-}
-
-const initialState: NewsAPIState = {
+const initialState: ArticleStateSlice = {
   articles: [],
   isLoading: false,
   error: null,
@@ -19,20 +12,21 @@ const initialState: NewsAPIState = {
   totalPages: 1,
 };
 
-export const fetchNewsArticles = createAsyncThunk(
+export const fetchNewsArticles = createAsyncThunk<
+  NewsAPIResponse,
+  FetchArticlesParams
+>(
   "newsAPI/fetchArticles",
   async ({
-    country,
     category,
     query,
     page,
   }: {
-    country?: string;
     category?: string;
     query?: string;
-    page?: number;
+    page: number;
   }) => {
-    const data = await fetchNews(country, category, query, page);
+    const data = await fetchNews(category, query, page);
     return data;
   }
 );
@@ -59,7 +53,7 @@ const newsAPISlice = createSlice({
           ...state.articles,
           ...action.payload.articles.map(normalizeNewsAPIArticle),
         ];
-        state.currentPage = action.payload.page || action.meta.arg.page || 1;
+        state.currentPage = action.meta.arg.page || 1;
         state.totalPages = Math.ceil(action.payload.totalResults / 20);
       })
       .addCase(fetchNewsArticles.rejected, (state, action) => {

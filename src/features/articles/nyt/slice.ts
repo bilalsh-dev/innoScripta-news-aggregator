@@ -1,17 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchNYT } from "./service";
 import { normalizeNYTArticle } from "./utils";
-import { Article } from "../types";
+import { ArticleStateSlice } from "../types";
 
-interface NYTState {
-  articles: Article[];
-  isLoading: boolean;
-  error: string | null;
-  currentPage: number;
-  totalPages: number;
-}
-
-const initialState: NYTState = {
+const initialState: ArticleStateSlice = {
   articles: [],
   isLoading: false,
   error: null,
@@ -28,7 +20,7 @@ export const fetchNYTArticles = createAsyncThunk(
   }: {
     category?: string;
     query?: string;
-    page?: number;
+    page: number;
   }) => {
     const data = await fetchNYT(category, query, page);
     return data;

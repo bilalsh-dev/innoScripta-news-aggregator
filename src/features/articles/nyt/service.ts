@@ -9,7 +9,7 @@ const NYT_API_KEY =
 export const fetchNYT = async (
   category?: string,
   query?: string,
-  page: number = 0
+  page: number = 1
 ) => {
   try {
     const params: Record<string, string | number> = {

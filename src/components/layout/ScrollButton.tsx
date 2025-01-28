@@ -23,10 +23,10 @@ export const ScrollButton = () => {
     <div className="relative">
       {isVisible && (
         <Button
-          variant="ghost"
+          // variant="ghost"
           size="icon"
           onClick={scrollToTop}
-          className="fixed bottom-8 right-2  z-50 rounded-full p-8 shadow-lg transition-transform duration-300 hover:scale-110 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+          className="fixed bottom-8 right-2  z-50 rounded-full p-8 shadow-lg transition-transform duration-300 hover:scale-110"
           aria-label="Scroll to top"
         >
           <ArrowUp className="h-10 w-10" />

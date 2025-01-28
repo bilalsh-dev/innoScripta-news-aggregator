@@ -1,17 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchGuardian } from "./service";
-import { Article } from "../types";
+import { ArticleStateSlice } from "../types";
 import { normalizeGuardianArticle } from "./utils";
 
-interface GuardianState {
-  articles: Article[];
-  isLoading: boolean;
-  error: string | null;
-  currentPage: number;
-  totalPages: number;
-}
-
-const initialState: GuardianState = {
+const initialState: ArticleStateSlice = {
   articles: [],
   isLoading: false,
   error: null,
@@ -28,7 +20,7 @@ export const fetchGuardianArticles = createAsyncThunk(
   }: {
     category?: string;
     query?: string;
-    page?: number;
+    page: number;
   }) => {
     const data = await fetchGuardian(category, query, page);
     return data;

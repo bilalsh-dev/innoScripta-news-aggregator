@@ -6,14 +6,13 @@ const NEWS_API_KEY =
   VITE_APP_NEWS_API_KEY || "a3906f4f790f4f2b8c917eb2f3a5621d";
 
 export const fetchNews = async (
-  country: string = "us",
   category?: string,
   query?: string,
   page: number = 1
 ) => {
   try {
     const params: Record<string, string | number> = {
-      country,
+      country: "us",
       page,
       apiKey: NEWS_API_KEY,
     };
