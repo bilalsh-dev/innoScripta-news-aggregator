@@ -13,8 +13,14 @@ import {
 } from "@/features/filters/slice";
 import DropdownFilter from "./DropdownFilter";
 import MultiSelectDropdown from "./MultiSelectDropdown";
-import { DATE_RANGES, CATEGORIES, SOURCES } from "@/lib/constants";
+import {
+  DATE_RANGES,
+  CATEGORIES,
+  SOURCES,
+  DATE_RANGE_DEFAULT_VALUE,
+} from "@/lib/constants";
 import { useDebounce } from "@/hooks/useDebounce";
+import { DateRangeValue } from "../types";
 
 const ArticleFilter: React.FC<object> = () => {
   const { isSidebarOpen, closeSidebar } = useTheme();
@@ -34,7 +40,7 @@ const ArticleFilter: React.FC<object> = () => {
 
   const isFilterActive =
     filters.sources.length !== 0 ||
-    filters.dateRange !== "" ||
+    filters.dateRange !== DATE_RANGE_DEFAULT_VALUE ||
     filters.category !== "" ||
     filters.query !== "";
 
@@ -64,7 +70,9 @@ const ArticleFilter: React.FC<object> = () => {
             value: range.value,
           }))}
           selected={filters.dateRange}
-          setSelected={(option) => dispatch(setDateRange(option))}
+          setSelected={(option) =>
+            dispatch(setDateRange(option as DateRangeValue))
+          }
           placeholder="Date"
         />
 
@@ -130,7 +138,9 @@ const ArticleFilter: React.FC<object> = () => {
                     value: range.value,
                   }))}
                   selected={filters.dateRange}
-                  setSelected={(option) => dispatch(setDateRange(option))}
+                  setSelected={(option) =>
+                    dispatch(setDateRange(option as DateRangeValue))
+                  }
                   placeholder="Date"
                 />
               </div>

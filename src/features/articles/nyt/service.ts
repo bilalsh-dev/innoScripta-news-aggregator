@@ -1,3 +1,5 @@
+import { DateRangeValue } from "@/features/filters/types";
+import { getDateRange } from "@/lib/utils";
 import axios from "axios";
 
 const { VITE_APP_NEW_YORK_TIMES_KEY } = import.meta.env;
@@ -9,6 +11,7 @@ const NYT_API_KEY =
 export const fetchNYT = async (
   category?: string,
   query?: string,
+  dateRange?: DateRangeValue,
   page: number = 1
 ) => {
   try {
@@ -19,6 +22,12 @@ export const fetchNYT = async (
 
     if (category) params.fq = `section_name:(${category})`;
     if (query) params.q = query;
+    if (dateRange) {
+      const { from, to } = getDateRange(dateRange);
+
+      params.begin_date = from.format("YYYYMMDD");
+      params.end_date = to.format("YYYYMMDD");
+    }
 
     const response = await axios.get(`${NYT_BASE_URL}/articlesearch.json`, {
       params,

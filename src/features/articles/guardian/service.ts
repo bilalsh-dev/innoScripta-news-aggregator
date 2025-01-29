@@ -1,3 +1,5 @@
+import { DateRangeValue } from "@/features/filters/types";
+import { getDateRange } from "@/lib/utils";
 import axios from "axios";
 
 const { VITE_APP_THE_GUARDIAN_API_KEY } = import.meta.env;
@@ -8,6 +10,7 @@ const GUARDIAN_API_KEY =
 export const fetchGuardian = async (
   category?: string,
   query?: string,
+  dateRange?: DateRangeValue,
   page: number = 1
 ) => {
   try {
@@ -21,6 +24,11 @@ export const fetchGuardian = async (
 
     if (category) params.section = category;
     if (query) params.q = query;
+    if (dateRange) {
+      const { from, to } = getDateRange(dateRange);
+      params.fromDate = from.format("YYYY-MM-DD");
+      params.toDate = to.format("YYYY-MM-DD");
+    }
 
     const response = await axios.get(`${GUARDIAN_BASE_URL}/search`, { params });
     return response.data;

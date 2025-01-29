@@ -25,7 +25,7 @@ export const useArticles = () => {
   const guardianState = useAppSelector((state: RootState) => state.guardian);
   const filters = useAppSelector((state: RootState) => state.filters);
 
-  const { sources, query, category } = filters;
+  const { sources, query, category, dateRange } = filters;
 
   const [mergedArticles, setMergedArticles] = useState<Article[]>([]);
 
@@ -40,8 +40,9 @@ export const useArticles = () => {
       case SOURCES_VALUES.newsapi_org:
         dispatch(
           fetchNewsArticles({
-            category: category?.toLowerCase() || "",
+            category,
             query,
+            dateRange,
             page,
           })
         );
@@ -49,14 +50,15 @@ export const useArticles = () => {
       case SOURCES_VALUES.newyork_times:
         dispatch(
           fetchNYTArticles({
-            category: category?.toLowerCase() || "",
+            category,
             query,
+            dateRange,
             page,
           })
         );
         break;
       case SOURCES_VALUES.the_guardian:
-        dispatch(fetchGuardianArticles({ query, page }));
+        dispatch(fetchGuardianArticles({ category, query, dateRange, page }));
         break;
       default:
         break;
@@ -95,7 +97,7 @@ export const useArticles = () => {
     selectedSources.forEach((source) => {
       fetchArticles(source, 1);
     });
-  }, [dispatch, query, category, sources]);
+  }, [dispatch, query, category, sources, dateRange]);
 
   useEffect(() => {
     // Merge articles ensuring Guardian articles are always first

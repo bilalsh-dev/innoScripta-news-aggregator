@@ -1,8 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchNews } from "./service";
 import { normalizeNewsAPIArticle } from "./utils";
-import { ArticleStateSlice, FetchArticlesParams } from "../types";
-import { NewsAPIResponse } from "./types";
+import {
+  ArticleStateSlice,
+  // FetchArticlesParams
+} from "../types";
+// import { NewsAPIResponse } from "./types";
+import { DateRangeValue } from "@/features/filters/types";
 
 const initialState: ArticleStateSlice = {
   articles: [],
@@ -11,22 +15,25 @@ const initialState: ArticleStateSlice = {
   currentPage: 1,
   totalPages: 1,
 };
+// <
+//   NewsAPIResponse,
+//   FetchArticlesParams
+// >
 
-export const fetchNewsArticles = createAsyncThunk<
-  NewsAPIResponse,
-  FetchArticlesParams
->(
+export const fetchNewsArticles = createAsyncThunk(
   "newsAPI/fetchArticles",
   async ({
     category,
     query,
+    dateRange,
     page,
   }: {
     category?: string;
     query?: string;
+    dateRange?: DateRangeValue;
     page: number;
   }) => {
-    const data = await fetchNews(category, query, page);
+    const data = await fetchNews(category, query, dateRange, page);
     return data;
   }
 );

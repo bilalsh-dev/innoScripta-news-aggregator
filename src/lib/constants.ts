@@ -1,3 +1,4 @@
+export const DATE_RANGE_DEFAULT_VALUE = "today";
 export const DATE_RANGES = [
   { label: "Today", value: "today" },
   { label: "Yesterday", value: "yesterday" },
