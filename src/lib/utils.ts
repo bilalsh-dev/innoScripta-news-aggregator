@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getDateRange(dateRange: DateRangeValue) {
+export function getDateRange(dateRange: string) {
   const now = moment();
   switch (dateRange) {
     case "today":

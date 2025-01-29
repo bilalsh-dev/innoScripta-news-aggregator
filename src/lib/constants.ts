@@ -1,4 +1,6 @@
 export const DATE_RANGE_DEFAULT_VALUE = "today";
+export const DEFAULT_SORTING_VALUE = "newest";
+
 export const DATE_RANGES = [
   { label: "Today", value: "today" },
   { label: "Yesterday", value: "yesterday" },
@@ -15,6 +17,11 @@ export const CATEGORIES = [
   { label: "Entertainment", value: "entertainment" },
 ];
 
+export const SORT_OPTIONS = [
+  { label: "Newest", value: "newest" },
+  { label: "Oldest", value: "oldest" },
+];
+
 export const SOURCES = [
   { label: "NewsAPI", value: "newsAPI" },
   { label: "NY Times", value: "nyt" },
@@ -24,6 +31,6 @@ export const SOURCES = [
 ];
 export const SOURCES_VALUES = {
   newsapi_org: "newsAPI",
-  the_guardian: "nyt",
-  newyork_times: "guardian",
+  the_guardian: "guardian",
+  newyork_times: "nyt",
 };

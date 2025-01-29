@@ -6,7 +6,6 @@ import {
   // FetchArticlesParams
 } from "../types";
 // import { NewsAPIResponse } from "./types";
-import { DateRangeValue } from "@/features/filters/types";
 
 const initialState: ArticleStateSlice = {
   articles: [],
@@ -26,14 +25,16 @@ export const fetchNewsArticles = createAsyncThunk(
     category,
     query,
     dateRange,
+    sortBy,
     page,
   }: {
     category?: string;
     query?: string;
-    dateRange?: DateRangeValue;
+    dateRange?: string;
+    sortBy?: string;
     page: number;
   }) => {
-    const data = await fetchNews(category, query, dateRange, page);
+    const data = await fetchNews(category, query, dateRange, sortBy, page);
     return data;
   }
 );

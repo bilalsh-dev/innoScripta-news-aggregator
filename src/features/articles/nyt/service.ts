@@ -1,4 +1,3 @@
-import { DateRangeValue } from "@/features/filters/types";
 import { getDateRange } from "@/lib/utils";
 import axios from "axios";
 
@@ -11,13 +10,15 @@ const NYT_API_KEY =
 export const fetchNYT = async (
   category?: string,
   query?: string,
-  dateRange?: DateRangeValue,
+  dateRange?: string,
+  sortBy?: string,
   page: number = 1
 ) => {
   try {
     const params: Record<string, string | number> = {
       "api-key": NYT_API_KEY,
       page,
+      rows: 10,
     };
 
     if (category) params.fq = `section_name:(${category})`;
@@ -28,6 +29,7 @@ export const fetchNYT = async (
       params.begin_date = from.format("YYYYMMDD");
       params.end_date = to.format("YYYYMMDD");
     }
+    if (sortBy) params.sort = sortBy;
 
     const response = await axios.get(`${NYT_BASE_URL}/articlesearch.json`, {
       params,

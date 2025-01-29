@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchNYT } from "./service";
 import { normalizeNYTArticle } from "./utils";
 import { ArticleStateSlice } from "../types";
-import { DateRangeValue } from "@/features/filters/types";
 
 const initialState: ArticleStateSlice = {
   articles: [],
@@ -18,14 +17,16 @@ export const fetchNYTArticles = createAsyncThunk(
     category,
     query,
     dateRange,
+    sortBy,
     page,
   }: {
     category?: string;
     query?: string;
-    dateRange?: DateRangeValue;
+    dateRange?: string;
+    sortBy?: string;
     page: number;
   }) => {
-    const data = await fetchNYT(category, query, dateRange, page);
+    const data = await fetchNYT(category, query, dateRange, sortBy, page);
     return data;
   }
 );

@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchGuardian } from "./service";
 import { ArticleStateSlice } from "../types";
 import { normalizeGuardianArticle } from "./utils";
-import { DateRangeValue } from "@/features/filters/types";
 
 const initialState: ArticleStateSlice = {
   articles: [],
@@ -18,14 +17,16 @@ export const fetchGuardianArticles = createAsyncThunk(
     category,
     query,
     dateRange,
+    sortBy,
     page,
   }: {
     category?: string;
     query?: string;
-    dateRange?: DateRangeValue;
+    dateRange?: string;
+    sortBy?: string;
     page: number;
   }) => {
-    const data = await fetchGuardian(category, query, dateRange, page);
+    const data = await fetchGuardian(category, query, dateRange, sortBy, page);
     return data;
   }
 );

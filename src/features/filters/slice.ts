@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DateRangeValue } from "./types";
-import { DATE_RANGE_DEFAULT_VALUE } from "@/lib/constants";
 
 interface FiltersState {
   sources: string[];
-  dateRange: DateRangeValue;
+  dateRange: string;
   category: string;
   query: string;
+  sortBy: string;
 }
 
 const initialState: FiltersState = {
   sources: [],
-  dateRange: DATE_RANGE_DEFAULT_VALUE,
+  dateRange: "",
   category: "",
   query: "",
+  sortBy: "",
 };
 
 const filtersSlice = createSlice({
@@ -23,7 +23,7 @@ const filtersSlice = createSlice({
     setSources: (state, action: PayloadAction<string[]>) => {
       state.sources = action.payload;
     },
-    setDateRange: (state, action: PayloadAction<DateRangeValue>) => {
+    setDateRange: (state, action: PayloadAction<string>) => {
       state.dateRange = action.payload;
     },
     setCategory: (state, action: PayloadAction<string>) => {
@@ -32,15 +32,25 @@ const filtersSlice = createSlice({
     setQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
     },
+    setSortBy: (state, action: PayloadAction<string>) => {
+      state.sortBy = action.payload;
+    },
     resetFilters: (state) => {
       state.sources = [];
-      state.dateRange = "today";
+      state.dateRange = "";
       state.category = "";
       state.query = "";
+      state.sortBy = "";
     },
   },
 });
 
-export const { setSources, setDateRange, setCategory, setQuery, resetFilters } =
-  filtersSlice.actions;
+export const {
+  setSources,
+  setDateRange,
+  setCategory,
+  setQuery,
+  setSortBy,
+  resetFilters,
+} = filtersSlice.actions;
 export default filtersSlice.reducer;

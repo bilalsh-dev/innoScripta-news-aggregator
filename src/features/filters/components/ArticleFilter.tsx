@@ -1,48 +1,33 @@
-import React, { useState } from "react";
+import useFilter from "../useFilter";
 import { Button, Input } from "@/components/ui";
-import { Search, Calendar, Filter, X } from "lucide-react";
+import { ArrowUpDown, Search, Calendar, Filter, X } from "lucide-react";
 import { useTheme } from "@/components/theme";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { RootState } from "@/store/store";
-import {
-  setSources,
-  setDateRange,
-  setCategory,
-  setQuery,
-  resetFilters,
-} from "@/features/filters/slice";
 import DropdownFilter from "./DropdownFilter";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 import {
   DATE_RANGES,
   CATEGORIES,
   SOURCES,
-  DATE_RANGE_DEFAULT_VALUE,
+  SORT_OPTIONS,
 } from "@/lib/constants";
-import { useDebounce } from "@/hooks/useDebounce";
-import { DateRangeValue } from "../types";
 
-const ArticleFilter: React.FC<object> = () => {
+const ArticleFilter = () => {
+  const {
+    searchInput,
+    setSearchInput,
+    handleResetFilters,
+    isFilterActive,
+    handleSetSources,
+    handleSetDateRange,
+    handleSetCategory,
+    handleSetSortBy,
+    filters,
+  } = useFilter();
   const { isSidebarOpen, closeSidebar } = useTheme();
-  const dispatch = useAppDispatch();
-  const filters = useAppSelector((state: RootState) => state.filters);
-  const [searchInput, setSearchInput] = useState(filters.query);
-
-  const debouncedSearchInput = useDebounce(searchInput, 800);
-
-  React.useEffect(() => {
-    dispatch(setQuery(debouncedSearchInput));
-  }, [debouncedSearchInput, dispatch]);
-
-  const handleResetFilters = () => {
-    dispatch(resetFilters());
-  };
-
-  const isFilterActive =
-    filters.sources.length !== 0 ||
-    filters.dateRange !== DATE_RANGE_DEFAULT_VALUE ||
-    filters.category !== "" ||
-    filters.query !== "";
+  const selectedSources = filters.sources;
+  const selectedDateRange = filters.dateRange;
+  const selectedCategory = filters.category;
+  const selectedSortBy = filters.sortBy;
 
   return (
     <>
@@ -59,8 +44,8 @@ const ArticleFilter: React.FC<object> = () => {
         </div>
         <MultiSelectDropdown
           options={SOURCES}
-          selectedValues={filters.sources}
-          onChange={(values) => dispatch(setSources(values))}
+          selectedValues={selectedSources}
+          onChange={(values) => handleSetSources(values)}
           placeholder="Select Sources"
         />
         <DropdownFilter
@@ -69,19 +54,24 @@ const ArticleFilter: React.FC<object> = () => {
             label: range.label,
             value: range.value,
           }))}
-          selected={filters.dateRange}
-          setSelected={(option) =>
-            dispatch(setDateRange(option as DateRangeValue))
-          }
+          selected={selectedDateRange}
+          setSelected={(option) => handleSetDateRange(option)}
           placeholder="Date"
         />
 
         <DropdownFilter
           icon={Filter}
           options={CATEGORIES}
-          selected={filters.category}
-          setSelected={(option) => dispatch(setCategory(option))}
+          selected={selectedCategory}
+          setSelected={(option) => handleSetCategory(option)}
           placeholder="Category"
+        />
+        <DropdownFilter
+          icon={ArrowUpDown}
+          options={SORT_OPTIONS}
+          selected={selectedSortBy}
+          setSelected={(option) => handleSetSortBy(option)}
+          placeholder="Sort By"
         />
 
         {isFilterActive && (
@@ -93,7 +83,6 @@ const ArticleFilter: React.FC<object> = () => {
           </Button>
         )}
       </div>
-
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-50"
@@ -124,8 +113,8 @@ const ArticleFilter: React.FC<object> = () => {
                 <Input
                   type="search"
                   placeholder="Search articles..."
-                  value={filters.query}
-                  onChange={(e) => dispatch(setQuery(e.target.value))}
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
                   className="pl-10 pr-4 py-2 rounded-full w-full bg-background hover:bg-accent/50 transition-colors"
                 />
               </div>
@@ -137,10 +126,8 @@ const ArticleFilter: React.FC<object> = () => {
                     label: range.label,
                     value: range.value,
                   }))}
-                  selected={filters.dateRange}
-                  setSelected={(option) =>
-                    dispatch(setDateRange(option as DateRangeValue))
-                  }
+                  selected={selectedDateRange}
+                  setSelected={(option) => handleSetDateRange(option)}
                   placeholder="Date"
                 />
               </div>
@@ -149,17 +136,26 @@ const ArticleFilter: React.FC<object> = () => {
                 <DropdownFilter
                   icon={Filter}
                   options={CATEGORIES}
-                  selected={filters.category}
-                  setSelected={(option) => dispatch(setCategory(option))}
+                  selected={selectedCategory}
+                  setSelected={(option) => handleSetCategory(option)}
                   placeholder="Category"
+                />
+              </div>
+              <div className="mb-4">
+                <DropdownFilter
+                  icon={ArrowUpDown}
+                  options={SORT_OPTIONS}
+                  selected={selectedSortBy}
+                  setSelected={(option) => handleSetSortBy(option)}
+                  placeholder="Sort By"
                 />
               </div>
 
               <div className="mb-4">
                 <MultiSelectDropdown
                   options={SOURCES}
-                  selectedValues={filters.sources}
-                  onChange={(values) => dispatch(setSources(values))}
+                  selectedValues={selectedSources}
+                  onChange={(values) => handleSetSources(values)}
                   placeholder="Select Sources"
                 />
               </div>

@@ -8,11 +8,6 @@ import { Article } from "../types";
 const ArticleList: React.FC = () => {
   const { articles, loadMoreArticles, hasMore, isLoading, error } =
     useArticles();
-
-  const handleGoToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   if (isLoading && articles.length === 0) {
     return (
       <div className="flex items-center justify-center flex-1 h-48">
@@ -38,18 +33,16 @@ const ArticleList: React.FC = () => {
       className="!overflow-hidden"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4">
-        {articles.map(
-          (article: Article, index: React.Key | null | undefined) => (
-            <ArticleItem article={article} key={index} />
-          )
-        )}
+        {articles.map((article: Article, index: number) => (
+          <ArticleItem article={article} key={index} />
+        ))}
       </div>
       {!hasMore && (
         <div className="text-center mt-6">
           <p className="text-gray-600 mb-4">No more articles to show.</p>
           <button
-            onClick={handleGoToTop}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="rounded-full bg-primary hover:bg-primary/90 transition-colors"
           >
             Go to Top
           </button>

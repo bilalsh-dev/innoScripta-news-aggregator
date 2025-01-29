@@ -1,4 +1,3 @@
-import { DateRangeValue } from "@/features/filters/types";
 import { getDateRange } from "@/lib/utils";
 import axios from "axios";
 
@@ -10,7 +9,8 @@ const GUARDIAN_API_KEY =
 export const fetchGuardian = async (
   category?: string,
   query?: string,
-  dateRange?: DateRangeValue,
+  dateRange?: string,
+  sortBy?: string,
   page: number = 1
 ) => {
   try {
@@ -29,7 +29,8 @@ export const fetchGuardian = async (
       params.fromDate = from.format("YYYY-MM-DD");
       params.toDate = to.format("YYYY-MM-DD");
     }
-
+    if (sortBy) params["order-by"] = sortBy;
+    params["page-size"] = 10;
     const response = await axios.get(`${GUARDIAN_BASE_URL}/search`, { params });
     return response.data;
   } catch (error) {

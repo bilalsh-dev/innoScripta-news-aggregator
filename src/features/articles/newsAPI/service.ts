@@ -1,4 +1,3 @@
-import { DateRangeValue } from "@/features/filters/types";
 import { getDateRange } from "@/lib/utils";
 import axios from "axios";
 
@@ -11,7 +10,8 @@ const NEWS_API_KEY =
 export const fetchNews = async (
   category?: string,
   query?: string,
-  dateRange?: DateRangeValue,
+  dateRange?: string,
+  sortBy?: string,
   page: number = 1
 ) => {
   try {
@@ -19,6 +19,7 @@ export const fetchNews = async (
     const params: Record<string, string | number> = {
       ...(category ? { country: "us" } : { q: "news" }),
       page,
+      pageSize: 10,
       apiKey: NEWS_API_KEY,
     };
 
@@ -28,6 +29,13 @@ export const fetchNews = async (
       const { from, to } = getDateRange(dateRange);
       params.from = from.format("YYYY-MM-DD");
       params.to = to.format("YYYY-MM-DD");
+    }
+    if (sortBy) {
+      if (sortBy === "newest") {
+        params.sortBy = "publishedAtDesc";
+      } else if (sortBy === "oldest") {
+        params.sortBy = "publishedAtAsc";
+      }
     }
 
     const response = await axios.get(`${NEWS_API_BASE_URL + endpoint}`, {
