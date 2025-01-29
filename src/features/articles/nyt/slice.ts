@@ -57,7 +57,7 @@ const nytSlice = createSlice({
 
         state.currentPage =
           action.payload.response.meta.offset / 10 + 1 ||
-          action.meta.arg.page ||
+          // saction.meta.arg.page ||
           1;
 
         state.totalPages = Math.ceil(action.payload.response.meta.hits / 10);

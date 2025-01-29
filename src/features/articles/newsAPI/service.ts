@@ -5,7 +5,7 @@ const { VITE_APP_NEWS_API_KEY } = import.meta.env;
 
 const NEWS_API_BASE_URL = "https://newsapi.org/v2";
 const NEWS_API_KEY =
-  VITE_APP_NEWS_API_KEY || "a3906f4f790f4f2b8c917eb2f3a5621d";
+  VITE_APP_NEWS_API_KEY || "4d7397ed03c74ac68ada2d73b7eca5ca";
 
 export const fetchNews = async (
   category?: string,

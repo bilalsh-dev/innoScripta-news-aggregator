@@ -6,8 +6,14 @@ import { useArticles } from "../hooks/useArticles";
 import { Article } from "../types";
 
 const ArticleList: React.FC = () => {
-  const { articles, loadMoreArticles, hasMore, isLoading, error } =
-    useArticles();
+  const {
+    articles,
+    loadMoreArticles,
+    hasMore,
+    isLoading,
+    error,
+    totalAvailableArticles,
+  } = useArticles();
   if (isLoading && articles.length === 0) {
     return (
       <div className="flex items-center justify-center flex-1 h-48">
@@ -19,7 +25,10 @@ const ArticleList: React.FC = () => {
   if (error && articles.length === 0) {
     return <div className="text-red-500 text-center p-4">Error: {error}</div>;
   }
-
+  console.log("hasMore", hasMore);
+  console.log("isLoading", isLoading);
+  console.log("error", error);
+  console.log("totalAvailableArticles", totalAvailableArticles);
   return (
     <InfiniteScroll
       dataLength={articles.length}

@@ -13,13 +13,18 @@ import {
   fetchGuardianArticles,
   resetArticles as resetGuardianArticles,
 } from "../guardian/slice";
+import { addArticles, resetArticles } from "../articlesSlice";
 import { SOURCES_VALUES } from "@/lib/constants";
 import { Article } from "../types";
 
 export const useArticles = () => {
   const dispatch = useAppDispatch();
   const [hasMore, setHasMore] = useState(true);
+  const articles = useAppSelector(
+    (state: RootState) => state.articles.articles
+  );
   const [mergedArticles, setMergedArticles] = useState<Article[]>([]);
+  const [isFetching, setIsFetching] = useState(false); // Prevent duplicate requests
 
   const newsAPIState = useAppSelector((state: RootState) => state.newsAPI);
   const nytState = useAppSelector((state: RootState) => state.nyt);
@@ -52,7 +57,7 @@ export const useArticles = () => {
     Object.values(sourceStateMap).find((state) => state.error)?.error || null;
 
   const fetchArticles = useCallback(
-    (source: string, page: number) => {
+    async (source: string, page: number) => {
       if (fetchFunctions[source]) {
         dispatch(
           fetchFunctions[source]({ category, query, dateRange, sortBy, page })
@@ -63,26 +68,31 @@ export const useArticles = () => {
   );
 
   const loadMoreArticles = () => {
+    if (isFetching) return;
+    setIsFetching(true);
+
     const selectedSources =
       sources.length > 0 ? sources : Object.keys(sourceStateMap);
 
     selectedSources.forEach((source) => {
       const state = sourceStateMap[source];
-      if (state.currentPage < state.totalPages) {
+      if (state.totalPages > 0 && state.currentPage < state.totalPages) {
         fetchArticles(source, state.currentPage + 1);
       }
     });
 
     setHasMore(
-      selectedSources.some(
-        (source) =>
-          sourceStateMap[source].currentPage < sourceStateMap[source].totalPages
-      )
+      selectedSources.some((source) => {
+        const state = sourceStateMap[source];
+        return state.totalPages > 0 && state.currentPage < state.totalPages;
+      })
     );
+
+    setIsFetching(false);
   };
 
   useEffect(() => {
-    // Object.values(resetFunctions).forEach(dispatch);
+    dispatch(resetArticles());
     Object.values(resetFunctions).forEach((resetFunction) =>
       dispatch(resetFunction())
     );
@@ -98,16 +108,33 @@ export const useArticles = () => {
     );
     setMergedArticles(merged);
   }, [newsAPIState.articles, nytState.articles, guardianState.articles]);
+  useEffect(() => {
+    const updatedArticles = Object.entries(sourceStateMap).map(
+      ([source, state]) => ({
+        source,
+        articles: state.articles.slice(-10),
+      })
+    );
+
+    dispatch(addArticles(updatedArticles));
+  }, [
+    dispatch,
+    newsAPIState.articles,
+    nytState.articles,
+    guardianState.articles,
+  ]);
 
   const totalPages = Math.max(
-    ...Object.values(sourceStateMap).map((state) => state.totalPages)
+    ...Object.values(sourceStateMap).map((state) => state.totalPages || 0)
   );
+  const totalAvailableArticles = mergedArticles.length;
 
   return {
-    articles: mergedArticles,
+    articles: articles,
     loadMoreArticles,
     hasMore,
     totalPages,
+    totalAvailableArticles,
     isLoading,
     error,
   };
