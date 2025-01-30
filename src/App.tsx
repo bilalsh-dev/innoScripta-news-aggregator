@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import { Articles } from "./features/feed/index.ts";
 import { Filters } from "./features/filters";
-import { ScrollButton } from "./components/layout/ScrollButton.tsx";
+import { ScrollButton } from "./components/layout/scroll-button.tsx";
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">

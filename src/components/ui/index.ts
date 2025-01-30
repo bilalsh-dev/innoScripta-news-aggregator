@@ -1,4 +1,4 @@
-export { Button } from "./Button";
+export { Button } from "./button";
 export {
   Card,
   CardContent,
@@ -6,15 +6,15 @@ export {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./Card";
-export { Checkbox } from "./Checkbox";
+} from "./card";
+export { Checkbox } from "./checkbox";
 export {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./DropdownMenu";
-export { HoverCard } from "./HoverCard";
-export { Input } from "./Input";
-export { Loader } from "./Loader";
-export { Skeleton } from "./Skeleton";
+} from "./dropdown-menu";
+export { HoverCard } from "./hover-card";
+export { Input } from "./input";
+export { Loader } from "./loader";
+export { Skeleton } from "./skeleton";

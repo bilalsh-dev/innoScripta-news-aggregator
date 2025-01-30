@@ -1,3 +1,3 @@
-export { Container, containerVariants } from "./Container";
-export { default as Header } from "./Header";
-export { ScrollButton } from "./ScrollButton";
+export { Container, containerVariants } from "./container";
+export { default as Header } from "./header";
+export { ScrollButton } from "./scroll-button";

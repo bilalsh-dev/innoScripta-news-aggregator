@@ -1,3 +1,3 @@
-export { default as NavToggle } from "./NavToggle";
-export { default as ModeToggle } from "./ModeToggle";
-export { useTheme, ThemeProvider } from "./ThemeProvider";
+export { default as NavToggle } from "./nav-toggle";
+export { default as ModeToggle } from "./mode-toggle";
+export { useTheme, ThemeProvider } from "./theme-provider";

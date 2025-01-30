@@ -8,8 +8,8 @@ import {
   SOURCES,
 } from "@/lib/constants";
 import { useFilter } from "../hooks";
-import DropdownFilter from "./DropdownFilter";
-import MultiSelectDropdown from "./MultiSelectDropdown";
+import DropdownFilter from "./dropdown-filter";
+import MultiSelectDropdown from "./multi-select-dropdown";
 
 const ArticleFilter = () => {
   const {

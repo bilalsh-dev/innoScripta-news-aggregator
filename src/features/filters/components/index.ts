@@ -1,1 +1,1 @@
-export { default as Filters } from "./ArticleFilter";
+export { default as Filters } from "./article-filter";
