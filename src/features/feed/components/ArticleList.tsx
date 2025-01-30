@@ -1,9 +1,8 @@
-import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loader } from "@/components/ui";
-import { ArticleItem } from "./ArticleItem";
 import { useArticles } from "../hooks";
 import { Article } from "../types";
+import { ArticleItem } from "./ArticleItem";
 
 const ArticleList: React.FC = () => {
   const { articles, loadMoreArticles, hasMorePages, isLoading, error } =

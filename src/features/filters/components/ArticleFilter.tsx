@@ -1,3 +1,4 @@
+import { ArrowUpDown, Calendar, Filter, Search, X } from "lucide-react";
 import { useTheme } from "@/components/theme";
 import { Button, Input } from "@/components/ui";
 import {
@@ -6,8 +7,7 @@ import {
   SORT_OPTIONS,
   SOURCES,
 } from "@/lib/constants";
-import { ArrowUpDown, Calendar, Filter, Search, X } from "lucide-react";
-import useFilter from "../hooks/useFilter";
+import { useFilter } from "../hooks";
 import DropdownFilter from "./DropdownFilter";
 import MultiSelectDropdown from "./MultiSelectDropdown";
 

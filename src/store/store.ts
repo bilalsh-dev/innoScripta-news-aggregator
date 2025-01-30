@@ -1,7 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { filtersReducer } from "@/features/filters/slices";
-import { newsFeedReducer } from "@/features/feed/slices";
 import { newsApi } from "@/features/feed/api";
+import { newsFeedReducer } from "@/features/feed/slices";
+import { filtersReducer } from "@/features/filters/slices";
+import { configureStore } from "@reduxjs/toolkit";
 export const store = configureStore({
   reducer: {
     newsFeed: newsFeedReducer,

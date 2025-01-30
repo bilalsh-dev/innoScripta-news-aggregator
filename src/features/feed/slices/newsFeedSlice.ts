@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DEFAULT_PAGE_SIZE, SOURCES_VALUES } from "@/lib/constants";
 import {
-  normalizeGuardianArticle,
-  normalizeNewsAPIArticle,
-  normalizeNYTArticle,
-} from "../utils";
-import {
   Article,
   GuardianResponse,
   NewsAPIResponse,
   NYTResponse,
 } from "../types";
+import {
+  normalizeGuardianArticle,
+  normalizeNewsAPIArticle,
+  normalizeNYTArticle,
+} from "../utils";
 
 interface SourceState {
   isLoading: boolean;

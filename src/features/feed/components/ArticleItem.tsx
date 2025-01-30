@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import {
   Button,
   Card,
   CardContent,
-  CardHeader,
-  CardFooter,
-  CardTitle,
   CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
   Skeleton,
 } from "@/components/ui";
 import { Article } from "../types";

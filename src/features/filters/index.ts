@@ -1,1 +1,1 @@
-export { default as Filters } from "./components/ArticleFilter";
+export { Filters } from "./components";

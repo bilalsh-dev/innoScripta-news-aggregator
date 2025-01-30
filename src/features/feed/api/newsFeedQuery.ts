@@ -1,8 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getDateRange } from "@/lib/utils";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { GuardianResponse, NewsAPIResponse, NYTResponse } from "../types";
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants";
+import { GuardianResponse, NewsAPIResponse, NYTResponse } from "../types";
 
 const {
   VITE_APP_NEW_YORK_TIMES_KEY,

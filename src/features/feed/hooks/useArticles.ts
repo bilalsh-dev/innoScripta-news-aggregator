@@ -1,13 +1,13 @@
-import { useRef, useEffect, useState } from "react";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { resetFeed, addToFeed } from "../slices";
+import { useEffect, useRef, useState } from "react";
 import { SOURCES_VALUES } from "@/lib/constants";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
 import {
-  useFetchNYTQuery,
   useFetchGuardianQuery,
   useFetchNewsQuery,
+  useFetchNYTQuery,
 } from "../api";
-import { RootState } from "@/store/store";
+import { addToFeed, resetFeed } from "../slices";
 
 export const useArticles = () => {
   const dispatch = useAppDispatch();
