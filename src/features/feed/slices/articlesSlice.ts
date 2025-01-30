@@ -119,8 +119,8 @@ const articlesSlice = createSlice({
   reducers: {
     addArticles: (
       state,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      action: PayloadAction<{ source: string; data: any; page: number }>
+
+      action: PayloadAction<NormalizeApiDataPayload>
     ) => {
       const { articles, ...rest } = normalizeApiData(action.payload);
       state.articles = interleaveArticles(state.articles, articles);
@@ -131,9 +131,12 @@ const articlesSlice = createSlice({
     },
     resetArticles: (state) => {
       state.articles = [];
-      state.sources = {
-        ...initialState.sources,
-      };
+      Object.keys(state.sources).forEach((source) => {
+        state.sources[source] = {
+          ...initialState.sources[source],
+          currentPage: 1,
+        };
+      });
     },
   },
 });
