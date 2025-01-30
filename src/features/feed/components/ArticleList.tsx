@@ -6,14 +6,8 @@ import { useArticles } from "../hooks/useArticles";
 import { Article } from "../types";
 
 const ArticleList: React.FC = () => {
-  const {
-    articles,
-    loadMoreArticles,
-    hasMore,
-    isLoading,
-    error,
-    totalAvailableArticles,
-  } = useArticles();
+  const { articles, loadMoreArticles, hasMorePages, isLoading, error } =
+    useArticles();
   if (isLoading && articles.length === 0) {
     return (
       <div className="flex items-center justify-center flex-1 h-48">
@@ -23,17 +17,23 @@ const ArticleList: React.FC = () => {
   }
 
   if (error && articles.length === 0) {
-    return <div className="text-red-500 text-center p-4">Error: {error}</div>;
+    return (
+      <div className="text-red-500 text-center p-4">
+        {error && "Error: "}
+        {typeof error === "object" && "data" in error
+          ? JSON.stringify(error.data)
+          : "An unknown error occurred."}
+      </div>
+    );
   }
-  console.log("hasMore", hasMore);
+  console.log("articles.length === 0", articles.length);
   console.log("isLoading", isLoading);
   console.log("error", error);
-  console.log("totalAvailableArticles", totalAvailableArticles);
   return (
     <InfiniteScroll
       dataLength={articles.length}
       next={loadMoreArticles}
-      hasMore={hasMore}
+      hasMore={hasMorePages}
       loader={
         <div className="flex items-center justify-center flex-1 h-48">
           <Loader size="lg" />
@@ -46,7 +46,7 @@ const ArticleList: React.FC = () => {
           <ArticleItem article={article} key={index} />
         ))}
       </div>
-      {!hasMore && (
+      {!hasMorePages && (
         <div className="text-center mt-6">
           <p className="text-gray-600 mb-4">No more articles to show.</p>
           <button

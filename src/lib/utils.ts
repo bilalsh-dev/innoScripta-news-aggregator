@@ -1,41 +1,52 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import moment from "moment";
-import { DateRangeValue } from "@/features/filters/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
 export function getDateRange(dateRange: string) {
   const now = moment();
+
   switch (dateRange) {
     case "today":
-      return { from: now.startOf("day"), to: now.endOf("day") };
+      return { from: now.clone().startOf("day"), to: now.clone().endOf("day") };
+
     case "yesterday":
       return {
-        from: now.subtract(1, "day").startOf("day"),
-        to: now.subtract(1, "day").endOf("day"),
+        from: now.clone().subtract(1, "day").startOf("day"),
+        to: now.clone().subtract(1, "day").endOf("day"),
       };
+
     case "lastWeek":
       return {
-        from: now.subtract(1, "week").startOf("day"),
-        to: now.endOf("day"),
+        from: now.clone().subtract(1, "week").startOf("week"),
+        to: now.clone().subtract(1, "week").endOf("week"),
       };
+
     case "lastMonth":
       return {
-        from: now.subtract(1, "month").startOf("day"),
-        to: now.endOf("day"),
+        from: now.clone().subtract(1, "month").startOf("month"),
+        to: now.clone().subtract(1, "month").endOf("month"),
       };
+
     case "lastYear":
       return {
-        from: now.subtract(1, "year").startOf("day"),
-        to: now.endOf("day"),
+        from: now.clone().subtract(1, "year").startOf("year"),
+        to: now.clone().subtract(1, "year").endOf("year"),
       };
+
     default:
-      return { from: now.startOf("day"), to: now.endOf("day") };
+      return { from: now.clone().startOf("day"), to: now.clone().endOf("day") };
   }
 }
+
+export type DateRangeValue =
+  | "today"
+  | "yesterday"
+  | "lastWeek"
+  | "lastMonth"
+  | "lastYear";
 
 export function dateRangeLabel(value: DateRangeValue) {
   const labelMap: Record<DateRangeValue, string> = {
@@ -45,5 +56,6 @@ export function dateRangeLabel(value: DateRangeValue) {
     lastMonth: "Last Month",
     lastYear: "Last Year",
   };
-  return labelMap[value];
+
+  return labelMap[value] || "Unknown";
 }

@@ -3,7 +3,7 @@ import "./App.css";
 import { Container, Header } from "@/components/layout";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
-import { Articles } from "./features/articles";
+import { Articles } from "./features/feed/index.ts";
 import { Filters } from "./features/filters";
 import { ScrollButton } from "./components/layout/ScrollButton.tsx";
 function App() {
