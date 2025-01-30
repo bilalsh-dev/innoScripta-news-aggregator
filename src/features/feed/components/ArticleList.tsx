@@ -25,9 +25,7 @@ const ArticleList: React.FC = () => {
       </div>
     );
   }
-  console.log("articles.length === 0", articles.length);
-  console.log("isLoading", isLoading);
-  console.log("error", error);
+
   return (
     <InfiniteScroll
       dataLength={articles.length}

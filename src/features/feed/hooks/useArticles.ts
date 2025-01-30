@@ -81,7 +81,6 @@ export const useArticles = () => {
           }
 
           if (query.isSuccess && query.data && !query.isFetching) {
-            console.log("Dispatch for ", source);
             dispatch(
               addToFeed({
                 source,
