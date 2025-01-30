@@ -1,15 +1,15 @@
-import useFilter from "../useFilter";
-import { Button, Input } from "@/components/ui";
-import { ArrowUpDown, Search, Calendar, Filter, X } from "lucide-react";
 import { useTheme } from "@/components/theme";
+import { Button, Input } from "@/components/ui";
+import {
+  CATEGORIES,
+  DATE_RANGES,
+  SORT_OPTIONS,
+  SOURCES,
+} from "@/lib/constants";
+import { ArrowUpDown, Calendar, Filter, Search, X } from "lucide-react";
+import useFilter from "../hooks/useFilter";
 import DropdownFilter from "./DropdownFilter";
 import MultiSelectDropdown from "./MultiSelectDropdown";
-import {
-  DATE_RANGES,
-  CATEGORIES,
-  SOURCES,
-  SORT_OPTIONS,
-} from "@/lib/constants";
 
 const ArticleFilter = () => {
   const {

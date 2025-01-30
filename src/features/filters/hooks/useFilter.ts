@@ -8,7 +8,7 @@ import {
   setQuery,
   setSortBy,
   resetFilters,
-} from "@/features/filters/slice";
+} from "@/features/filters/slices/filtersSlice";
 import { useDebounce } from "@/hooks/useDebounce";
 
 const useFilter = () => {

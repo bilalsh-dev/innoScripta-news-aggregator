@@ -19,12 +19,12 @@ interface SourceState {
   totalPages: number;
 }
 
-interface ArticlesState {
+interface NewsFeedState {
   articles: Article[];
   sources: Record<string, SourceState>;
 }
 
-const initialState: ArticlesState = {
+const initialState: NewsFeedState = {
   articles: [],
   sources: {
     [SOURCES_VALUES.newsapi_org]: {
@@ -113,11 +113,11 @@ export const normalizeApiData = ({
   }
 };
 
-const articlesSlice = createSlice({
+const newsFeedSlice = createSlice({
   name: "articles",
   initialState,
   reducers: {
-    addArticles: (
+    addToFeed: (
       state,
 
       action: PayloadAction<NormalizeApiDataPayload>
@@ -129,7 +129,7 @@ const articlesSlice = createSlice({
         ...rest,
       };
     },
-    resetArticles: (state) => {
+    resetFeed: (state) => {
       state.articles = [];
       Object.keys(state.sources).forEach((source) => {
         state.sources[source] = {
@@ -141,5 +141,5 @@ const articlesSlice = createSlice({
   },
 });
 
-export const { addArticles, resetArticles } = articlesSlice.actions;
-export default articlesSlice.reducer;
+export const { addToFeed, resetFeed } = newsFeedSlice.actions;
+export default newsFeedSlice.reducer;

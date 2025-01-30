@@ -1,12 +1,12 @@
 import { useRef, useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { resetArticles, addArticles } from "../slices/articlesSlice";
+import { resetFeed, addToFeed } from "../slices";
 import { SOURCES_VALUES } from "@/lib/constants";
 import {
   useFetchNYTQuery,
   useFetchGuardianQuery,
   useFetchNewsQuery,
-} from "../api/query";
+} from "../api";
 import { RootState } from "@/store/store";
 
 export const useArticles = () => {
@@ -19,7 +19,7 @@ export const useArticles = () => {
     sources.length > 0 ? sources : Object.values(SOURCES_VALUES);
 
   const { articles, sources: sourceStates } = useAppSelector(
-    (state: RootState) => state.articles
+    (state: RootState) => state.newsFeed
   );
   const [refreshFeed, setRefreshFeed] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,7 +36,7 @@ export const useArticles = () => {
       JSON.stringify(prevFilters.current.sources) !== JSON.stringify(sources);
 
     if (shouldReset) {
-      dispatch(resetArticles());
+      dispatch(resetFeed());
       setCurrentPage(1);
       setRefreshFeed((prev) => !prev);
       prevFilters.current = { query, category, dateRange, sortBy, sources };
@@ -83,7 +83,7 @@ export const useArticles = () => {
           if (query.isSuccess && query.data && !query.isFetching) {
             console.log("Dispatch for ", source);
             dispatch(
-              addArticles({
+              addToFeed({
                 source,
                 data: query.data,
                 page: currentPage,

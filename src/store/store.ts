@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import filtersReducer from "@/features/filters/slice";
-import articlesReducer from "@/features/feed/slices/articlesSlice";
-import newsApi from "@/features/feed/api/query";
+import { filtersReducer } from "@/features/filters/slices";
+import { newsFeedReducer } from "@/features/feed/slices";
+import { newsApi } from "@/features/feed/api";
 export const store = configureStore({
   reducer: {
-    articles: articlesReducer,
+    newsFeed: newsFeedReducer,
     filters: filtersReducer,
     [newsApi.reducerPath]: newsApi.reducer,
   },

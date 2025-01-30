@@ -8,8 +8,8 @@ import {
   CardFooter,
   CardTitle,
   CardDescription,
+  Skeleton,
 } from "@/components/ui";
-import { Skeleton } from "@/components/ui";
 import { Article } from "../types";
 
 export const ArticleItem: React.FC<{ article: Article }> = React.memo(

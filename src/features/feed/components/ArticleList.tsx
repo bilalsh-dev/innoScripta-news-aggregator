@@ -2,7 +2,7 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loader } from "@/components/ui";
 import { ArticleItem } from "./ArticleItem";
-import { useArticles } from "../hooks/useArticles";
+import { useArticles } from "../hooks";
 import { Article } from "../types";
 
 const ArticleList: React.FC = () => {
