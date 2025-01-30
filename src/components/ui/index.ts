@@ -15,6 +15,6 @@ export {
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 export { HoverCard } from "./hover-card";
-export { Input } from "./input.tsx";
-export { Loader } from "./loader.tsx";
-export { Skeleton } from "./skeleton.tsx";
+export { Input } from "./input";
+export { Loader } from "./loader";
+export { Skeleton } from "./skeleton";
