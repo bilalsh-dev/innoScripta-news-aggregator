@@ -2,10 +2,6 @@
 
 A **single-page news aggregator application** built with **React, TypeScript, Vite, and Tailwind CSS**. This application fetches articles from multiple news sources and presents them in a clean, user-friendly interface. It allows users to **search, filter, and customize their news feed**.
 
-# Innoscripta News Aggregator
-
-A **single-page news aggregator application** built with **React, TypeScript, Vite, and Tailwind CSS**. This application fetches articles from multiple news sources and presents them in a clean, user-friendly interface. It allows users to **search, filter, and customize their news feed**.
-
 ## 🖼️ Screenshots
 
 ### 🔹 Home Page
